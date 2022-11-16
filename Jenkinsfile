@@ -25,6 +25,7 @@ pipeline {
         checkout scm
         script {
           dockerImage = docker.build imagename
+          sh "docker images"
         }
       }
     }
@@ -34,7 +35,7 @@ pipeline {
      
       steps {
         deleteDir()
-        //checkout scm
+        checkout scm
         sh "echo 'Run Static Code Analysis'"
       }
     }
