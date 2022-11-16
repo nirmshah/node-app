@@ -10,6 +10,9 @@ pipeline {
     git_commit_author = ''
     git_commit_author_name = ''
     git_commit_author_email = ''
+    imagename = "nirmshah/node-app"
+    registryCredential = 'nirmshah'
+    dockerImage = ''
   }
 
   stages {
@@ -19,6 +22,9 @@ pipeline {
       steps {
         deleteDir()
         sh "echo 'Build the Docker Image'"
+        script {
+          dockerImage = docker.build imagename
+        }
         //checkout scm
       }
     }
