@@ -12,8 +12,9 @@ pipeline {
     git_commit_author_email = ''
     imagename = "nirmshah/node-app:${BUILD_NUMBER}"
     imagename_latest = "nirmshah/node-app:latest"
-    registryCredential = 'nirmshah'
+    dockerHubCredentialID = 'DockerHubCredential'
     dockerImage = ''
+    dockerImageLatest = ''
   }
 
   stages {
@@ -22,8 +23,10 @@ pipeline {
       steps {
         sh "echo 'Build Docker Image'"
         script {
-          dockerImage = docker.build imagename_latest
-          sh "docker tag ${imagename_latest} ${imagename}"
+          dockerImage = docker.build imagename
+          dockerImageLatest = docker.build imagename_latest
+
+          //sh "docker tag ${imagename_latest} ${imagename}"
         }
       }
     }
@@ -33,8 +36,9 @@ pipeline {
     steps {
        sh "echo 'Push Docker Image to DockerHub'"
        script {
-        withDockerRegistry([ credentialsId: "DockerHubCredential", url: "" ]) {
+        withDockerRegistry([ credentialsId: ${dockerHubCredentialID}, url: "" ]) {
           dockerImage.push()
+          dockerImageLatest.push()
           }
         }
       }
