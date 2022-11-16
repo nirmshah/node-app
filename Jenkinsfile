@@ -24,7 +24,7 @@ pipeline {
         sh '''
           docker info
           docker version
-          docker compose version
+          docker-compose --version
           curl --version
         '''
       }
@@ -65,7 +65,7 @@ pipeline {
     {
       steps
       {
-        sh 'docker system prune -a --volume -f'
+        //sh 'docker system prune -a --volume -f'
       }
     }
 
@@ -74,8 +74,8 @@ pipeline {
     {
       steps
       {
-        sh 'docker compose up -d --no-color --wait'
-        sh 'docker compose ps'
+        //sh 'docker-compose up -d --no-color --wait'
+        //sh 'docke-compose ps'
       }
     }
    
@@ -104,8 +104,8 @@ pipeline {
     always
     {
      // Get the container down
-        sh 'docker compose down --remove-orphans -v'
-        sh 'docker compose ps'
+        //sh 'docker-compose down'
+        //sh 'docker-compose ps'
     }
     success {
        sh "echo 'Send mail on success'"
