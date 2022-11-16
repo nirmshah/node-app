@@ -18,6 +18,13 @@ pipeline {
   }
 
   stages {
+    // Check Tooling
+    stage('Check Tooling') {
+      steps {
+        
+      }
+    }
+
     // Build
     stage('Build Docker Image') {
       steps {
@@ -25,51 +32,47 @@ pipeline {
         script {
           dockerImage = docker.build imagename
           dockerImageLatest = docker.build imagename_latest
-
-          //sh "docker tag ${imagename_latest} ${imagename}"
         }
       }
     }
 
     // Static Code Analysis
-    stage('Push Docker Image to DockerHub') {
-    steps {
-       sh "echo 'Push Docker Image to DockerHub'"
-       script {
-        withDockerRegistry([ credentialsId: "${dockerHubCredentialID}", url: "" ]) {
-          dockerImage.push()
-          dockerImageLatest.push()
-          }
-        }
+    stage('Static Code Analysis') {
+      steps {
+        sh "echo 'Static Code Analysis'"
       }
     }
 
-    // Unit Tests
-    stage('Unit Tests') {
-    
+    stage('Push Docker Image to DockerHub') {
       steps {
-        //deleteDir()
-        //checkout scm
-        sh "echo 'Run Unit Tests'"
+        sh "echo 'Push Docker Image to DockerHub'"
+        script {
+          withDockerRegistry([ credentialsId: "${dockerHubCredentialID}", url: "" ]) {
+            dockerImage.push()
+            dockerImageLatest.push()
+            }
+          }
+        }
+    }
+
+   
+    // Run Unit Tests
+    stage('Unit Tests') {
+      steps {
+        sh "echo 'Static Code Analysis'"
       }
     }
 
     // Acceptance Tests
     stage('Acceptance Tests') {
-     
       steps {
-        //deleteDir()
-        //checkout scm
         sh "echo 'Run Acceptance Tests'"
       }
     }
 
     // Performance Tests
     stage('Performance Tests') {
-    
       steps {
-        //deleteDir()
-        //checkout scm
         sh "echo 'Run Performance Tests'"
       }
     }
