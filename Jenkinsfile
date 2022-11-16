@@ -64,7 +64,7 @@ pipeline {
     {
       steps
       {
-        sh "Echo 'Prune Docker Data'"
+        sh "echo 'Prune Docker Data'"
         //sh 'docker system prune -a --volume -f'
       }
     }
@@ -74,7 +74,7 @@ pipeline {
     {
       steps
       {
-        sh "Bring up Containers'"
+        sh "echo 'Bring up Containers'"
         //sh 'docker-compose up -d --no-color --wait'
         //sh 'docke-compose ps'
       }
