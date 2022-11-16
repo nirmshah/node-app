@@ -73,17 +73,6 @@ pipeline {
         sh "echo 'Run Unit Tests'"
       }
     }
-
-    // Performance Tests
-    stage('Performance Tests') {
-     
-      steps {
-        //deleteDir()
-        //checkout scm
-        sh "echo 'Run Performance Tests'"
-      }
-    }
-
   }
   post {
     success {
