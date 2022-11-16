@@ -24,7 +24,6 @@ pipeline {
         sh '''
           docker info
           docker version
-          docker-compose --version
           curl --version
         '''
       }
@@ -107,7 +106,7 @@ pipeline {
     {
      // Get the container down
         //sh 'docker-compose down'
-        sh 'docker-compose ps'
+        sh 'docker ps'
     }
     success {
        sh "echo 'Send mail on success'"
