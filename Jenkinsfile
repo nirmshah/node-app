@@ -11,6 +11,7 @@ pipeline {
     git_commit_author_name = ''
     git_commit_author_email = ''
     imagename = "nirmshah/node-app:${BUILD_NUMBER}"
+    imagename_latest = "nirmshah/node-app:latest"
     registryCredential = 'nirmshah'
     dockerImage = ''
   }
@@ -25,7 +26,7 @@ pipeline {
         sh "echo 'Build the Docker Image'"
         script {
           dockerImage = docker.build imagename
-          sh "Image Number : ${imagename}"
+          sh "docker tag ${imagename} ${imagename_latest}"
         }
       }
     }
