@@ -13,16 +13,6 @@ pipeline {
   }
 
   stages {
-
-    // Build
-    stage('Checkout Latest Code') {
-      
-      steps {
-        deleteDir()
-        git 'https://github.com/nirmshah/node-app.git'
-      }
-    }
-
     // Build
     stage('Build') {
      
