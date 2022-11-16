@@ -22,10 +22,10 @@ pipeline {
       steps {
         deleteDir()
         sh "echo 'Build the Docker Image'"
+        checkout scm
         script {
           dockerImage = docker.build imagename
         }
-        //checkout scm
       }
     }
 
