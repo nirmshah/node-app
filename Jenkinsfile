@@ -18,26 +18,20 @@ pipeline {
 
   stages {
     // Build
-    stage('Build') {
-     
+    stage('Build Docker Image') {
       steps {
-        //deleteDir()
-        //checkout scm
         sh "echo 'Build the Docker Image'"
         script {
-          dockerImage = docker.build imagename
-          sh "docker tag ${imagename} ${imagename_latest}"
+          dockerImage = docker.build imagename_latest
+          sh "docker tag ${imagename_latest} ${imagename}"
         }
       }
     }
 
     // Static Code Analysis
-    stage('Static Code Analysis') {
-     
-      steps {
-        //deleteDir()
-        //checkout scm
-        sh "echo 'Run Static Code Analysis'"
+    stage('Push Docker Image to DockerHub') {
+    steps {
+          dockerImage.push()
       }
     }
 
