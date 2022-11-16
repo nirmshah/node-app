@@ -10,7 +10,7 @@ pipeline {
     git_commit_author = ''
     git_commit_author_name = ''
     git_commit_author_email = ''
-    imagename = "nirmshah/node-app"
+    imagename = "nirmshah/node-app:${BUILD_NUMBER}"
     registryCredential = 'nirmshah'
     dockerImage = ''
   }
@@ -20,12 +20,12 @@ pipeline {
     stage('Build') {
      
       steps {
-        deleteDir()
+        //deleteDir()
+        //checkout scm
         sh "echo 'Build the Docker Image'"
-        checkout scm
         script {
           dockerImage = docker.build imagename
-          sh "Build Number : ${BUILD_NUMBER}"
+          sh "Image Number : ${imagename}"
         }
       }
     }
@@ -34,8 +34,8 @@ pipeline {
     stage('Static Code Analysis') {
      
       steps {
-        deleteDir()
-        checkout scm
+        //deleteDir()
+        //checkout scm
         sh "echo 'Run Static Code Analysis'"
       }
     }
@@ -44,7 +44,7 @@ pipeline {
     stage('Unit Tests') {
     
       steps {
-        deleteDir()
+        //deleteDir()
         //checkout scm
         sh "echo 'Run Unit Tests'"
       }
@@ -54,7 +54,7 @@ pipeline {
     stage('Acceptance Tests') {
      
       steps {
-        deleteDir()
+        //deleteDir()
         //checkout scm
         sh "echo 'Run Acceptance Tests'"
       }
