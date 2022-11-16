@@ -10,7 +10,7 @@ pipeline {
     git_commit_author = ''
     git_commit_author_name = ''
     git_commit_author_email = ''
-    imagename = "nirmshah/node-app:v1.0"
+    imagename = "nirmshah/node-app"
     registryCredential = 'nirmshah'
     dockerImage = ''
   }
