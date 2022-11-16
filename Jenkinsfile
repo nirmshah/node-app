@@ -20,7 +20,7 @@ pipeline {
     // Build
     stage('Build Docker Image') {
       steps {
-        sh "echo 'Build the Docker Image'"
+        sh "echo 'Build Docker Image'"
         script {
           dockerImage = docker.build imagename_latest
           sh "docker tag ${imagename_latest} ${imagename}"
@@ -31,7 +31,10 @@ pipeline {
     // Static Code Analysis
     stage('Push Docker Image to DockerHub') {
     steps {
+       sh "echo 'Push Docker Image to DockerHub'"
+       script {
           dockerImage.push()
+        }
       }
     }
 
