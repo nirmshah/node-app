@@ -21,7 +21,12 @@ pipeline {
     // Check Tooling
     stage('Check Tooling') {
       steps {
-        
+        sh '''
+          docker info
+          docker version
+          docker compose version
+          curl --version
+        '''
       }
     }
 
@@ -55,11 +60,29 @@ pipeline {
         }
     }
 
+    // Prune Docker Data
+    stage("Prune Docker Data")
+    {
+      steps
+      {
+        sh 'docker system prune -a --volume -f'
+      }
+    }
+
+    // Start Docker Container
+    stage("Bring up Containers")
+    {
+      steps
+      {
+        sh 'docker compose up -d --no-color --wait'
+        sh 'docker compose ps'
+      }
+    }
    
     // Run Unit Tests
     stage('Unit Tests') {
       steps {
-        sh "echo 'Static Code Analysis'"
+        sh "echo 'Unit Tests'"
       }
     }
 
@@ -78,13 +101,19 @@ pipeline {
     }
   }
   post {
+    always
+    {
+     // Get the container down
+        sh 'docker compose down --remove-orphans -v'
+        sh 'docker compose ps'
+    }
     success {
-      sh "echo 'Send mail on success'"
-      // mail to:"me@example.com", subject:"SUCCESS: ${currentBuild.fullDisplayName}", body: "Yay, we passed."
+       sh "echo 'Send mail on success'"
+       // mail to:"me@example.com", subject:"SUCCESS: ${currentBuild.fullDisplayName}", body: "Yay, we passed."
     }
     failure {
-      sh "echo 'Send mail on failure'"
-      // mail to:"me@example.com", subject:"FAILURE: ${currentBuild.fullDisplayName}", body: "Boo, we failed."
+       sh "echo 'Send mail on failure'"
+       // mail to:"me@example.com", subject:"FAILURE: ${currentBuild.fullDisplayName}", body: "Boo, we failed."
     }
   }
 }
