@@ -25,7 +25,7 @@ pipeline {
         checkout scm
         script {
           dockerImage = docker.build imagename
-          sh "docker images"
+          sh "Build Number : ${BUILD_NUMBER}"
         }
       }
     }
