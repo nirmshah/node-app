@@ -24,7 +24,7 @@ pipeline {
       }
     }
 
-    // Build
+    // Build Docker Image
     stage('Build Docker Image') {
       steps {
         sh "echo 'Build Docker Image'"
@@ -101,7 +101,7 @@ pipeline {
     {
      // Get the container down
         //sh 'docker-compose down'
-        sh 'docker ps'
+        sh 'docker images'
     }
     success {
        sh "echo 'Send mail on success'"
