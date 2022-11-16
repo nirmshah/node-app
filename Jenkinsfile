@@ -65,6 +65,7 @@ pipeline {
     {
       steps
       {
+        sh "Echo 'Prune Docker Data'"
         //sh 'docker system prune -a --volume -f'
       }
     }
@@ -74,6 +75,7 @@ pipeline {
     {
       steps
       {
+        sh "Bring up Containers'"
         //sh 'docker-compose up -d --no-color --wait'
         //sh 'docke-compose ps'
       }
@@ -105,7 +107,7 @@ pipeline {
     {
      // Get the container down
         //sh 'docker-compose down'
-        //sh 'docker-compose ps'
+        sh 'docker-compose ps'
     }
     success {
        sh "echo 'Send mail on success'"
