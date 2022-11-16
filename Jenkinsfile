@@ -5,11 +5,6 @@ pipeline {
   agent any
 
   environment {
-    git_commit_message = ''
-    git_commit_diff = ''
-    git_commit_author = ''
-    git_commit_author_name = ''
-    git_commit_author_email = ''
     imagename = "nirmshah/node-app:${BUILD_NUMBER}"
     imagename_latest = "nirmshah/node-app:latest"
     dockerHubCredentialID = 'DockerHubCredential'
