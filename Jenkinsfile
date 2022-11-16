@@ -36,7 +36,7 @@ pipeline {
     steps {
        sh "echo 'Push Docker Image to DockerHub'"
        script {
-        withDockerRegistry([ credentialsId: ${dockerHubCredentialID}, url: "" ]) {
+        withDockerRegistry([ credentialsId: "${dockerHubCredentialID}", url: "" ]) {
           dockerImage.push()
           dockerImageLatest.push()
           }
