@@ -16,9 +16,7 @@ pipeline {
 
     // Build
     stage('Checkout Latest Code') {
-      agent {
-        label 'node'
-      }
+      
       steps {
         deleteDir()
         git 'https://github.com/nirmshah/node-app.git'
@@ -27,9 +25,7 @@ pipeline {
 
     // Build
     stage('Build') {
-      agent {
-        label 'node'
-      }
+     
       steps {
         deleteDir()
         sh "echo 'Build the Docker Image'"
@@ -39,9 +35,7 @@ pipeline {
 
     // Static Code Analysis
     stage('Static Code Analysis') {
-      agent {
-        label 'node'
-      }
+     
       steps {
         deleteDir()
         //checkout scm
@@ -51,9 +45,7 @@ pipeline {
 
     // Unit Tests
     stage('Unit Tests') {
-      agent {
-        label 'node'
-      }
+    
       steps {
         deleteDir()
         //checkout scm
@@ -63,9 +55,7 @@ pipeline {
 
     // Acceptance Tests
     stage('Acceptance Tests') {
-      agent {
-        label 'node'
-      }
+     
       steps {
         deleteDir()
         //checkout scm
