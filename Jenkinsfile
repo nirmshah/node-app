@@ -33,7 +33,9 @@ pipeline {
     steps {
        sh "echo 'Push Docker Image to DockerHub'"
        script {
+        withDockerRegistry([ credentialsId: "DockerHubCredential", url: "" ]) {
           dockerImage.push()
+          }
         }
       }
     }
