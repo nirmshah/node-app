@@ -21,9 +21,6 @@ app.get('/profile-picture', function (req, res) {
   res.end(img, 'binary');
 });
 
-// usmongoUrlLocale when starting application locally
-//let mongoUrlLocal = "mongodb://rootuser:rootpass@localhost:27017";
-
 // use when starting application as docker container
 let mongoUrlDocker = "mongodb://" + process.env.MONGO_DB_USERNAME + ":" + process.env.MONGO_DB_PWD + "@" + process.env.MONGO_DB_SERVER;
 
@@ -40,9 +37,8 @@ app.post('/update-profile', function (req, res) {
     if (err) throw err;
 
     let db = client.db(databaseName);
-    userObj['userid'] = 1;
 
-    let myquery = { userid: 1 };
+    let myquery = { userid: userObj['userid'] };
     let newvalues = { $set: userObj };
 
     db.collection("users").updateOne(myquery, newvalues, {upsert: true}, function(err, res) {
@@ -57,16 +53,14 @@ app.post('/update-profile', function (req, res) {
 
 app.post('/insert-profile', function (req, res) {
   let userObj = req.body;
+  let userId = userObj['userid'];
 
   MongoClient.connect(mongoUrlDocker, mongoClientOptions, function (err, client) {
     if (err) throw err;
 
-    let randomUserID = cryptoRandomNumber(1, 1000000);
-
     let db = client.db(databaseName);
-    userObj['userid'] = randomUserID;
 
-    let myquery = { userid: randomUserID };
+    let myquery = { userid: userId };
     let newvalues = { $set: userObj };
 
     db.collection("users").updateOne(myquery, newvalues, {upsert: true}, function(err, res) {
@@ -80,14 +74,15 @@ app.post('/insert-profile', function (req, res) {
 });
 
 app.get('/get-profile', function (req, res) {
+  let userObj = req.body;
   let response = {};
+
   // Connect to the db
   MongoClient.connect(mongoUrlDocker, mongoClientOptions, function (err, client) {
     if (err) throw err;
 
     let db = client.db(databaseName);
-
-    let myquery = { userid: 1 };
+    let myquery = { userid: userObj['userid'] };
 
     db.collection("users").findOne(myquery, function (err, result) {
       if (err) throw err;
